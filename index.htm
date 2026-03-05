@@ -47,7 +47,7 @@
       "image": "https://images.jdmagicbox.com/v2/comp/mumbai/e4/022pxx22.xx22.170508124642.z6e4/catalogue/dr-ami-shah-nurture-dental-clinic-matunga-east-mumbai-dentists-2s86h8z.jpg",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "1 Laxmi Niwas, 435 Bhaudaji Road, Matunga East",
+        "streetAddress": "Riddhi Siddhi Apartment CHS, 54-57, R.A. Kidwai Marg, Matunga East",
         "addressLocality": "Mumbai",
         "addressRegion": "Maharashtra",
         "postalCode": "400019",
@@ -923,6 +923,67 @@
             #theme-toggle-btn { bottom: 20px; right: 20px; width: 42px; height: 42px; }
         }
 
+        
+        /* ── BREATHING GLOW on mobile logo ── */
+        @keyframes breathe-dark {
+            0%, 100% { box-shadow: 0 0 8px 2px rgba(240, 235, 228, 0.15), 0 0 20px 4px rgba(197, 164, 88, 0.1); }
+            50%       { box-shadow: 0 0 16px 6px rgba(240, 235, 228, 0.35), 0 0 36px 10px rgba(197, 164, 88, 0.2); }
+        }
+        @keyframes breathe-light {
+            0%, 100% { box-shadow: 0 0 8px 3px rgba(197, 164, 88, 0.25), 0 0 20px 6px rgba(197, 164, 88, 0.12); }
+            50%       { box-shadow: 0 0 18px 8px rgba(197, 164, 88, 0.55), 0 0 40px 14px rgba(197, 164, 88, 0.25); }
+        }
+        .mobile-logo-btn {
+            animation: breathe-dark 3.5s ease-in-out infinite;
+        }
+        body.light-mode .mobile-logo-btn {
+            animation: breathe-light 3.5s ease-in-out infinite;
+        }
+
+        /* ── SCROLL PROGRESS BAR ── */
+        #scroll-progress {
+            position: fixed; top: 0; left: 0; height: 2px; width: 0%;
+            background: linear-gradient(90deg, var(--accent-gold), var(--accent-gold-bright));
+            z-index: 9999;
+            transition: width 0.1s linear;
+            border-radius: 0 2px 2px 0;
+        }
+
+        /* ── FLOATING WHATSAPP BUTTON ── */
+        #float-whatsapp {
+            position: fixed; bottom: 90px; right: 28px; z-index: 1000;
+            width: 50px; height: 50px; border-radius: 50%;
+            background: var(--floating-nav-bg);
+            backdrop-filter: blur(var(--backdrop-blur-amount));
+            border: 1px solid var(--floating-nav-border);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--accent-gold); font-size: 1.4rem;
+            box-shadow: 0 4px 20px rgba(197, 164, 88, 0.3);
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: wa-breathe 3s ease-in-out infinite;
+        }
+        @keyframes wa-breathe {
+            0%, 100% { box-shadow: 0 4px 20px rgba(197, 164, 88, 0.25); }
+            50%       { box-shadow: 0 4px 32px rgba(197, 164, 88, 0.55); }
+        }
+        #float-whatsapp:hover { transform: scale(1.12); }
+
+        /* ── HERO CANVAS (particles) ── */
+        #hero-canvas {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none; z-index: 0;
+            opacity: 0.5;
+        }
+        body.light-mode #hero-canvas { opacity: 1; }
+        #hero { position: relative; overflow: hidden; }
+        #hero .container { position: relative; z-index: 1; }
+
+        @media (max-width: 768px) {
+            #float-whatsapp { bottom: 80px; right: 20px; width: 46px; height: 46px; font-size: 1.25rem; }
+        }
+
         </style>
 
     <!-- Schema.org JSON-LD: FAQ -->
@@ -954,7 +1015,7 @@
         {
           "@type": "Question",
           "name": "Where is Nurture Dental located and how do I book?",
-          "acceptedAnswer": {"@type": "Answer", "text": "We are at 1 Laxmi Niwas, 435 Bhaudaji Road, Matunga East, Mumbai 400019. Book via WhatsApp and Dr. Shah's team will confirm your slot within hours."}
+          "acceptedAnswer": {"@type": "Answer", "text": "We are at Riddhi Siddhi Apartment CHS, 54-57, R.A. Kidwai Marg, Matunga East, Mumbai 400019. Book via WhatsApp and Dr. Shah's team will confirm your slot within hours."}
         }
       ]
     }
@@ -964,6 +1025,12 @@
 <body class="not-touch-device"> 
     <div class="custom-cursor"></div>
     
+    <div id="scroll-progress"></div>
+
+    <a id="float-whatsapp" href="https://wa.me/919867235490?text=Hello%20Dr.%20Ami,%20I'd%20like%20to%20schedule%20a%20consultation." target="_blank" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
     <button id="theme-toggle-btn" title="Toggle Light/Dark Mode">
         <i class="fas fa-sun"></i>
         <i class="fas fa-moon"></i>
@@ -992,6 +1059,7 @@
     </div>
 
     <section id="hero" class="section-padding">
+        <canvas id="hero-canvas"></canvas>
         <div class="container">
             <div class="hero-content" data-aos="fade-up" data-aos-duration="1200">
                 <h1>Artistry in Dentistry, <span class="highlight">A Commitment to You.</span></h1>
@@ -1090,7 +1158,7 @@
                     <div class="clinic-slide"><img src="https://lh3.googleusercontent.com/p/AF1QipO6o3add9d03KPtpAvogqmRjt7TYCShu3cMxWIo=s680" alt="Patient comfort area at Nurture Dental, Mumbai" loading="lazy"></div>
                     <div class="clinic-slide"><img src="https://lh3.googleusercontent.com/p/AF1QipObfO4saiWczb20lmeZFFpy5xSULUZS7zPTUleU=s680" alt="Nurture Dental clinic sterilisation zone" loading="lazy"></div>
                     <div class="clinic-slide"><img src="https://lh3.googleusercontent.com/p/AF1QipOziMxYes0VOOBN_BDIoynPdfTfA9-PclM0loqR=s680" alt="Premium dental clinic interior, Nurture Dental Mumbai" loading="lazy"></div>
-                    <div class="clinic-slide"><img src="https://lh3.googleusercontent.com/p/AF1QipOPFiuPMSip-GIAwNInV7naPtXPsI7qKf5wT6DL=s680" alt="Nurture Dental Clinic, 435 Bhaudaji Road Matunga" loading="lazy"></div>
+                    <div class="clinic-slide"><img src="https://lh3.googleusercontent.com/p/AF1QipOPFiuPMSip-GIAwNInV7naPtXPsI7qKf5wT6DL=s680" alt="Nurture Dental Clinic, R.A. Kidwai Marg Matunga" loading="lazy"></div>
                     <div class="clinic-slide"><img src="https://lh3.googleusercontent.com/p/AF1QipNzmRO-3cmVh4MOi-eQ5fDCcZi7nPyJ9XkRLMo5=s680" alt="Nurture Dental clinic reception area, Matunga Mumbai" loading="lazy"></div>
                     <div class="clinic-slide"><img src="https://lh3.googleusercontent.com/p/AF1QipOblF_jj2QpTw-gjkmD0xgYEnXN13rAjAVVS4GS=s680" alt="Modern dental treatment room at Nurture Dental, Matunga" loading="lazy"></div>
                     <!-- Repeating for seamlessness -->
@@ -1104,7 +1172,7 @@
                     <div class="clinic-slide"><img src="https://lh3.googleusercontent.com/p/AF1QipOLYQJp0Ta_njivcTr-ZIoGBXMG_mp75IouufFo=s680" alt="Patient comfort area at Nurture Dental, Mumbai" loading="lazy"></div>
                     <div class="clinic-slide"><img src="https://lh3.googleusercontent.com/p/AF1QipOLLsc_RqZBmZHAXpd6AB7ZFC44NMS_XU4HXaL6=s680" alt="Nurture Dental clinic sterilisation zone" loading="lazy"></div>
                     <div class="clinic-slide"><img src="https://lh3.googleusercontent.com/p/AF1QipO6o3add9d03KPtpAvogqmRjt7TYCShu3cMxWIo=s680" alt="Premium dental clinic interior, Nurture Dental Mumbai" loading="lazy"></div>
-                    <div class="clinic-slide"><img src="https://lh3.googleusercontent.com/p/AF1QipObfO4saiWczb20lmeZFFpy5xSULUZS7zPTUleU=s680" alt="Nurture Dental Clinic, 435 Bhaudaji Road Matunga" loading="lazy"></div>
+                    <div class="clinic-slide"><img src="https://lh3.googleusercontent.com/p/AF1QipObfO4saiWczb20lmeZFFpy5xSULUZS7zPTUleU=s680" alt="Nurture Dental Clinic, R.A. Kidwai Marg Matunga" loading="lazy"></div>
                     <div class="clinic-slide"><img src="https://lh3.googleusercontent.com/p/AF1QipOziMxYes0VOOBN_BDIoynPdfTfA9-PclM0loqR=s680" alt="Nurture Dental clinic reception area, Matunga Mumbai" loading="lazy"></div>
                     <div class="clinic-slide"><img src="https://lh3.googleusercontent.com/p/AF1QipOPFiuPMSip-GIAwNInV7naPtXPsI7qKf5wT6DL=s680" alt="Modern dental treatment room at Nurture Dental, Matunga" loading="lazy"></div>
                     <div class="clinic-slide"><img src="https://lh3.googleusercontent.com/p/AF1QipNzmRO-3cmVh4MOi-eQ5fDCcZi7nPyJ9XkRLMo5=s680" alt="Nurture Dental clinic interior design, Matunga Mumbai" loading="lazy"></div>
@@ -1269,7 +1337,7 @@
                             <div class="faq-icon"><i class="fas fa-plus"></i></div>
                         </button>
                         <div class="faq-answer">
-                            <p>We are located at 1 Laxmi Niwas, 435 Bhaudaji Road, Matunga East, Mumbai — 400019, opposite Union Bank. The easiest way to book is via WhatsApp — just tap the button below and Dr. Shah's team will confirm your slot within hours.</p>
+                            <p>We are located at Riddhi Siddhi Apartment CHS, 54-57, R.A. Kidwai Marg, Matunga East, Mumbai — 400019. The easiest way to book is via WhatsApp — just tap the button below and Dr. Shah's team will confirm your slot within hours.</p>
                         </div>
                     </div>
 
@@ -1307,7 +1375,8 @@
                     </div>
                     <address class="clinic-address" style="font-style:normal; margin: 16px 0; color: var(--text-light); font-size:0.9rem; line-height:1.7;">
                         <strong>Nurture Dental</strong><br>
-                        1 Laxmi Niwas, 435 Bhaudaji Road,<br>
+                        Riddhi Siddhi Apartment CHS, 54-57,<br>
+                        R.A. Kidwai Marg,<br>
                         Matunga East, Mumbai – 400019<br>
                         <a href="tel:+919867235490" style="color:var(--accent-gold);">+91 98672 35490</a>
                     </address>
@@ -1616,4 +1685,84 @@
         init();
     })();
     </script>
+
+    <script>
+    // ── SCROLL PROGRESS BAR ──
+    (function() {
+        const bar = document.getElementById('scroll-progress');
+        if (!bar) return;
+        window.addEventListener('scroll', function() {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            bar.style.width = (scrollTop / docHeight * 100) + '%';
+        }, { passive: true });
+    })();
+
+    // ── HERO PARTICLES ──
+    (function() {
+        const canvas = document.getElementById('hero-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        let W, H, particles = [];
+        const COUNT = 55;
+
+        function resize() {
+            W = canvas.width = canvas.offsetWidth;
+            H = canvas.height = canvas.offsetHeight;
+        }
+
+        function isDark() { return !document.body.classList.contains('light-mode'); }
+
+        function randomParticle() {
+            return {
+                x: Math.random() * W,
+                y: Math.random() * H,
+                r: Math.random() * 1.5 + 0.3,
+                vx: (Math.random() - 0.5) * 0.18,
+                vy: -Math.random() * 0.12 - 0.04,
+                alpha: Math.random() * 0.5 + 0.1,
+                flicker: Math.random() * 0.008 + 0.002,
+                flickerDir: 1
+            };
+        }
+
+        function init() {
+            resize();
+            particles = Array.from({ length: COUNT }, randomParticle);
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, W, H);
+            const dark = isDark();
+            particles.forEach(p => {
+                // Flicker
+                p.alpha += p.flicker * p.flickerDir;
+                if (p.alpha > 0.65 || p.alpha < 0.05) p.flickerDir *= -1;
+
+                const color = dark
+                    ? `rgba(240, 230, 210, ${p.alpha})`
+                    : `rgba(160, 120, 40, ${p.alpha * 2.2})`;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = color;
+                ctx.fill();
+
+                p.x += p.vx;
+                p.y += p.vy;
+
+                // Wrap around
+                if (p.y < -5) { p.y = H + 5; p.x = Math.random() * W; }
+                if (p.x < -5) p.x = W + 5;
+                if (p.x > W + 5) p.x = -5;
+            });
+            requestAnimationFrame(draw);
+        }
+
+        window.addEventListener('resize', resize);
+        init();
+        draw();
+    })();
+    </script>
+
 </body>
