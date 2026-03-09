@@ -47,7 +47,7 @@
       "image": "https://images.jdmagicbox.com/v2/comp/mumbai/e4/022pxx22.xx22.170508124642.z6e4/catalogue/dr-ami-shah-nurture-dental-clinic-matunga-east-mumbai-dentists-2s86h8z.jpg",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "1 Laxmi Niwas, 435 Bhaudaji Road, Matunga East",
+        "streetAddress": "Riddhi Siddhi Apartment CHS, 54-57, R.A. Kidwai Marg, Matunga East",
         "addressLocality": "Mumbai",
         "addressRegion": "Maharashtra",
         "postalCode": "400019",
@@ -923,6 +923,34 @@
             #theme-toggle-btn { bottom: 20px; right: 20px; width: 42px; height: 42px; }
         }
 
+        /* ── SCROLL PROGRESS BAR ── */
+        #scroll-progress-bar {
+            position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+            background: linear-gradient(90deg, var(--accent-gold), var(--accent-gold-bright));
+            z-index: 9999;
+            transition: width 0.1s linear;
+            box-shadow: 0 0 8px rgba(197,164,88,0.6);
+        }
+
+        /* ── WHATSAPP FLOATING BUTTON ── */
+        #whatsapp-float {
+            position: fixed; bottom: 90px; right: 30px; z-index: 1000;
+            display: flex; align-items: center; justify-content: center;
+            width: 54px; height: 54px; border-radius: 50%;
+            background: #25D366;
+            box-shadow: 0 4px 20px rgba(37,211,102,0.45);
+            color: #fff; font-size: 1.6rem;
+            transition: transform 0.3s var(--transition-curve), box-shadow 0.3s ease;
+            text-decoration: none;
+        }
+        #whatsapp-float:hover {
+            transform: scale(1.12);
+            box-shadow: 0 6px 28px rgba(37,211,102,0.6);
+            color: #fff;
+        }
+        @media (max-width: 768px) {
+            #whatsapp-float { bottom: 80px; right: 20px; width: 48px; height: 48px; font-size: 1.4rem; }
+        }
         </style>
 
     <!-- Schema.org JSON-LD: FAQ -->
@@ -962,6 +990,10 @@
 
 </head>
 <body class="not-touch-device"> 
+    <div id="scroll-progress-bar"></div>
+    <a id="whatsapp-float" href="https://wa.me/919867235490?text=Hello%20Dr.%20Ami,%20I'd%20like%20to%20schedule%20a%20consultation." target="_blank" title="Chat on WhatsApp" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
     <div class="custom-cursor"></div>
     
     <button id="theme-toggle-btn" title="Toggle Light/Dark Mode">
@@ -1022,7 +1054,7 @@
                 </div>
                 <div class="stat-item">
                     <div class="stat-number" data-target="4.9">0</div>
-                    <div class="stat-label">Google Rating</div>
+                    <div class="stat-label">Google Rating <span style="color:var(--accent-gold);">&#9733;</span></div>
                 </div>
             </div>
         </div>
@@ -1269,7 +1301,7 @@
                             <div class="faq-icon"><i class="fas fa-plus"></i></div>
                         </button>
                         <div class="faq-answer">
-                            <p>We are located at 1 Laxmi Niwas, 435 Bhaudaji Road, Matunga East, Mumbai — 400019, opposite Union Bank. The easiest way to book is via WhatsApp — just tap the button below and Dr. Shah's team will confirm your slot within hours.</p>
+                            <p>We are located at Riddhi Siddhi Apartment CHS, 54-57, R.A. Kidwai Marg, Matunga East, Mumbai – 400019. The easiest way to book is via WhatsApp — just tap the button below and Dr. Shah's team will confirm your slot within hours.</p>
                         </div>
                     </div>
 
@@ -1307,8 +1339,9 @@
                     </div>
                     <address class="clinic-address" style="font-style:normal; margin: 16px 0; color: var(--text-light); font-size:0.9rem; line-height:1.7;">
                         <strong>Nurture Dental</strong><br>
-                        1 Laxmi Niwas, 435 Bhaudaji Road,<br>
-                        Matunga East, Mumbai – 400019<br>
+                        Riddhi Siddhi Apartment CHS, 54-57,<br>
+                        R.A. Kidwai Marg, Matunga East,<br>
+                        Mumbai – 400019<br>
                         <a href="tel:+919867235490" style="color:var(--accent-gold);">+91 98672 35490</a>
                     </address>
                     <a href="https://www.google.co.in/maps/place/Nurture+Dental/@19.0291311,72.8526591,17z/data=!3m1!4b1!4m6!3m5!1s0x3be7cf290e3321a9:0xc23a6da54110f8d7!8m2!3d19.029126!4d72.855234!16s%2Fg%2F11c6cx5s4l?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D" target="_blank">
@@ -1614,6 +1647,19 @@
 
         window.addEventListener('resize', init);
         init();
+    })();
+    </script>
+    <script>
+    // ── SCROLL PROGRESS BAR ──
+    (function() {
+        const bar = document.getElementById('scroll-progress-bar');
+        if (!bar) return;
+        window.addEventListener('scroll', function() {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+            bar.style.width = pct + '%';
+        }, { passive: true });
     })();
     </script>
 </body>
