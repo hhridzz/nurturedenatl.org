@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.nurturedental.org/sitemap.xml
+Sitemap: https://nurturedental.org/sitemap.xml
