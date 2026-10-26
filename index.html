@@ -122,29 +122,7 @@
     <style>
         /* --- ULTRA-LUX DESIGN SYSTEM --- */
         :root {
-            /* COLOR PALETTE (DARK & RICH) - DEFAULT DARK MODE */
-            --bg-primary: #1a1816;
-            --bg-surface: #24211e;
-            --accent-gold: #c5a458;
-            --accent-gold-bright: #e4c57a;
-            --text-bright: #f0ebe4;
-            --text-light: #d1c9c0;
-            --text-muted: #8a8179;
-            --border-color: rgba(197, 164, 88, 0.2);
-            --shadow-soft: 0 15px 50px rgba(0, 0, 0, 0.25);
-            --shadow-medium: 0 20px 65px rgba(0, 0, 0, 0.35);
-            --backdrop-blur-amount: 12px;
-            --floating-nav-bg: rgba(36, 33, 30, 0.6);
-            --floating-nav-border: rgba(197, 164, 88, 0.3);
-            --floating-nav-icon: var(--text-light);
-            --font-heading: 'Playfair Display', serif;
-            --font-body: 'Manrope', sans-serif;
-            --transition-speed: 0.5s;
-            --transition-curve: cubic-bezier(0.19, 1, 0.22, 1);
-        }
-
-        /* --- LIGHT MODE THEME --- */
-        body.light-mode {
+            /* COLOR PALETTE (LIGHT) */
             --bg-primary: #f9f7f5;
             --bg-surface: #ffffff;
             --accent-gold: #b58f3c;
@@ -155,11 +133,16 @@
             --border-color: rgba(0, 0, 0, 0.1);
             --shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.08);
             --shadow-medium: 0 15px 55px rgba(0, 0, 0, 0.12);
+            --backdrop-blur-amount: 12px;
             --floating-nav-bg: rgba(249, 247, 245, 0.65);
             --floating-nav-border: rgba(0, 0, 0, 0.15);
             --floating-nav-icon: var(--text-light);
-            background-image: none;
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Manrope', sans-serif;
+            --transition-speed: 0.5s;
+            --transition-curve: cubic-bezier(0.19, 1, 0.22, 1);
         }
+
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; font-size: 16px; }
@@ -170,7 +153,6 @@
             font-weight: 300;
             color: var(--text-light);
             background-color: var(--bg-primary);
-            background-image: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.03), transparent 40%);
             overflow-x: hidden;
             transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
             padding-top: 100px;
@@ -236,28 +218,7 @@
         body.light-mode .btn-primary:hover { color: #000; }
         body.light-mode .btn-secondary:hover { color: var(--bg-surface); }
 
-        /* --- THEME & NAV --- */
-        #theme-toggle-btn {
-            position: fixed; bottom: 30px; right: 30px; z-index: 1000;
-            display: flex; justify-content: center; align-items: center;
-            width: 50px; height: 50px; border-radius: 50%;
-            border: 1px solid var(--floating-nav-border);
-            background-color: var(--floating-nav-bg);
-            backdrop-filter: blur(var(--backdrop-blur-amount));
-            -webkit-backdrop-filter: blur(var(--backdrop-blur-amount));
-            cursor: pointer; font-size: 1.2rem; color: var(--accent-gold);
-            transition: all 0.4s var(--transition-curve);
-            box-shadow: var(--shadow-soft); overflow: hidden;
-        }
-        #theme-toggle-btn:hover {
-            transform: scale(1.1); box-shadow: var(--shadow-medium);
-            border-color: var(--accent-gold-bright); color: var(--accent-gold-bright);
-        }
-        #theme-toggle-btn i { position: absolute; transition: transform 0.4s var(--transition-curve), opacity 0.3s ease; }
-        #theme-toggle-btn .fa-moon { transform: translateY(0); opacity: 1; }
-        #theme-toggle-btn .fa-sun { transform: translateY(20px); opacity: 0; }
-        body.light-mode #theme-toggle-btn .fa-moon { transform: translateY(-20px); opacity: 0; }
-        body.light-mode #theme-toggle-btn .fa-sun { transform: translateY(0); opacity: 1; }
+        /* --- NAV --- */
 
         #floating-navbar-container {
             position: fixed; top: 25px; left: 50%; transform: translateX(-50%); z-index: 999;
@@ -542,7 +503,6 @@
             body { padding-top: 80px; }
             .container { padding: 0 25px; }
             #floating-navbar-container { flex-direction: column; top: 15px; gap: 10px; }
-            #theme-toggle-btn { bottom: 20px; right: 20px; width: 45px; height: 45px; font-size: 1.1rem; }
             
             h1 { font-size: 3.2rem; }
             #hero h1 { font-size: 3.8rem; }
@@ -880,7 +840,6 @@
             .floating-nav-item { margin: 0 2px; }
             .floating-nav-item a { width: 38px; height: 38px; font-size: 1rem; }
 
-            #theme-toggle-btn { bottom: 20px; right: 20px; width: 42px; height: 42px; font-size: 1rem; }
         }
 
         
@@ -928,7 +887,6 @@
             .floating-nav-item { margin: 0 2px; }
             .floating-nav-item a { width: 40px; height: 40px; font-size: 1rem; }
 
-            #theme-toggle-btn { bottom: 20px; right: 20px; width: 42px; height: 42px; }
         }
 
         /* ── SCROLL PROGRESS BAR ── */
@@ -998,17 +956,12 @@
 
 </head>
     
-<body class="not-touch-device"> 
+<body class="not-touch-device light-mode"> 
     <div id="scroll-progress-bar"></div>
     <a id="whatsapp-float" href="https://wa.me/919867235490?text=Hello%20Dr.%20Ami,%20I'd%20like%20to%20schedule%20a%20consultation." target="_blank" title="Chat on WhatsApp" aria-label="Chat on WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
     <div class="custom-cursor"></div>
-    
-    <button id="theme-toggle-btn" title="Toggle Light/Dark Mode">
-        <i class="fas fa-sun"></i>
-        <i class="fas fa-moon"></i>
-    </button>
     
     <div id="floating-navbar-container">
         <nav id="floating-navbar">
@@ -1433,33 +1386,6 @@
                     }
                 });
             });
-
-            const themeToggleButton = document.getElementById('theme-toggle-btn');
-            const body = document.body;
-            const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
-
-            function applyTheme(theme) {
-                if (theme === 'light') {
-                    body.classList.add('light-mode');
-                } else {
-                    body.classList.remove('light-mode');
-                }
-            }
-            
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme) {
-                applyTheme(savedTheme);
-            } else {
-                applyTheme(prefersDarkScheme.matches ? 'dark' : 'light');
-            }
-
-            if (themeToggleButton) {
-                themeToggleButton.addEventListener('click', () => {
-                    const newTheme = body.classList.contains('light-mode') ? 'dark' : 'light';
-                    applyTheme(newTheme);
-                    localStorage.setItem('theme', newTheme);
-                });
-            }
 
             const customCursor = document.querySelector('.custom-cursor');
             const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
