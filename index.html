@@ -484,6 +484,16 @@
         .footer-nav { list-style: none; display: flex; justify-content: center; gap: 30px; margin-bottom: 40px; }
         .footer-nav a { color: var(--text-light); font-weight: 400; font-size: 1rem; }
         .footer-nav a:hover { color: var(--text-bright); }
+        .footer-social { display: flex; justify-content: center; flex-wrap: wrap; gap: 14px; margin-bottom: 40px; }
+        .footer-social a {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 12px 24px; border-radius: 50px;
+            border: 1px solid var(--accent-gold); color: var(--accent-gold);
+            font-size: 0.95rem; font-weight: 500; letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+        .footer-social a i { font-size: 1.2rem; }
+        .footer-social a:hover { background-color: var(--accent-gold); color: var(--bg-surface); transform: translateY(-2px); }
         .footer-bottom { padding-top: 40px; border-top: 1px solid var(--border-color); font-size: 0.9rem; color: var(--text-muted); }
 
         /* Responsive Adjustments */
@@ -1333,6 +1343,10 @@
                 <li><a href="#reviews">Reviews</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
+            <div class="footer-social">
+                <a href="https://www.instagram.com/nurturedental/" target="_blank" rel="noopener noreferrer" aria-label="Nurture Dental on Instagram"><i class="fab fa-instagram" aria-hidden="true"></i><span>Instagram</span></a>
+                <a href="https://api.whatsapp.com/send/?phone=919867235490&amp;text=Hello+Dr.+Ami%2C+I%27d+like+to+schedule+a+consultation.&amp;type=phone_number&amp;app_absent=0" target="_blank" rel="noopener noreferrer" aria-label="Contact Nurture Dental on WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i><span>WhatsApp Us</span></a>
+            </div>
             <div class="footer-bottom">
                 <p>© <span id="currentYear"></span> Nurture Dental. All Rights Reserved. Web Atelier by Hriday Shah.</p>
             </div>
