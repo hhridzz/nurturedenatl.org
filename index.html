@@ -790,12 +790,16 @@
             .google-reviews-link { display: none; }
 
             #floating-navbar-container {
-                top: 15px;
-                left: 50%;
-                transform: translateX(-50%);
+                top: 12px;
+                left: 8px;
+                right: 8px;
+                transform: none;
                 flex-direction: row;
-                gap: 10px;
+                justify-content: center;
+                gap: 0;
+                pointer-events: none;
             }
+            #floating-navbar-container > * { pointer-events: auto; }
 
             /* Hide the text label */
             .mobile-nav-logo span { display: none; }
@@ -826,13 +830,17 @@
             /* Nav icons always visible on mobile */
             .floating-nav-list {
                 display: flex;
+                flex: 1 1 auto;
+                min-width: 0;
                 flex-wrap: nowrap;
+                justify-content: space-between;
                 padding: 0 0 0 4px;
                 margin: 0;
             }
+            #floating-navbar { flex: 1 1 auto; max-width: 380px; min-width: 0; }
 
-            .floating-nav-item { margin: 0 2px; }
-            .floating-nav-item a { width: 38px; height: 38px; font-size: 1rem; }
+            .floating-nav-item { margin: 0 1px; flex: 1 1 0; min-width: 0; display: flex; justify-content: center; }
+            .floating-nav-item a { width: 100%; max-width: 40px; height: auto; aspect-ratio: 1 / 1; font-size: 1rem; }
 
         }
 
@@ -864,15 +872,12 @@
 
             /* Hide home icon on mobile — logo replaces it */
             .nav-home-item { display: none; }
-            .floating-nav-item { margin: 0 2px; }
-            .floating-nav-item a { width: 40px; height: 40px; font-size: 1rem; }
 
         }
 
         @media (max-width: 380px) {
-            .mobile-logo-btn { width: 38px; height: 38px; }
-            .floating-nav-item { margin: 0 1px; }
-            .floating-nav-item a { width: 34px; height: 34px; font-size: 0.9rem; }
+            .mobile-logo-btn { width: 36px; height: 36px; }
+            .floating-nav-item a { font-size: 0.85rem; }
         }
 
         /* ── SCROLL PROGRESS BAR ── */
