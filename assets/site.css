@@ -857,6 +857,16 @@ h1.page-title::after {
 /* Google Reviews pill reused as a page-end link (the nav version hides on small screens) */
 .google-reviews-link.google-reviews-link--cta { display: inline-flex; padding: 14px 30px; }
 
+/* The two clinic phone numbers, each with what it is for */
+.phone-lines { display: flex; justify-content: center; flex-wrap: wrap; gap: 28px 60px; margin-bottom: 40px; }
+.phone-line { max-width: 300px; text-align: center; }
+.phone-line__label {
+    display: block; margin-bottom: 6px; font-family: var(--font-body); font-weight: 500;
+    font-size: 0.8rem; line-height: 1.6; letter-spacing: 2px; text-transform: uppercase; color: var(--accent-gold);
+}
+.phone-line__number { font-size: 1.25rem; font-weight: 400; color: var(--text-bright); letter-spacing: 0.5px; }
+.phone-line__number:hover { color: var(--accent-gold-bright); }
+
 /* Current page marker */
 .footer-nav a[aria-current="page"] { color: var(--text-bright); }
 .mobile-logo-btn.active { border-color: var(--accent-gold); box-shadow: 0 0 0 2px var(--accent-gold); }
