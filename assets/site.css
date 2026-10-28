@@ -870,3 +870,39 @@ h1.page-title::after {
 /* Current page marker */
 .footer-nav a[aria-current="page"] { color: var(--text-bright); }
 .mobile-logo-btn.active { border-color: var(--accent-gold); box-shadow: 0 0 0 2px var(--accent-gold); }
+
+/* Treatment pages */
+.treatment-intro { text-align: center; max-width: 800px; margin: 0 auto 70px; }
+.treatment-intro h1.page-title { margin-bottom: 50px; }
+.treatment-intro p { font-size: 1.15rem; }
+.treatment-grid { display: flex; flex-direction: column; gap: 25px; max-width: 900px; margin: 0 auto; }
+.treatment-block {
+    background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 5px;
+    padding: 40px; display: flex; gap: 30px; align-items: flex-start;
+    transition: border-color var(--transition-speed) var(--transition-curve), box-shadow var(--transition-speed) var(--transition-curve);
+}
+.treatment-block:hover { border-color: var(--accent-gold); box-shadow: var(--shadow-soft); }
+.treatment-block .pillar-icon { flex-shrink: 0; margin-top: 4px; }
+.treatment-block h2 { font-size: 1.9rem; text-align: left; margin-bottom: 18px; }
+.treatment-block h2::after { display: none; }
+.treatment-block p, .treatment-block li { font-size: 1.05rem; }
+.treatment-block ul, .treatment-block ol { padding-left: 1.3em; margin-bottom: 1.2em; }
+.treatment-block li { margin-bottom: 0.6em; line-height: 1.7; }
+.treatment-block li::marker { color: var(--accent-gold); }
+.treatment-block p:last-child, .treatment-block ul:last-child, .treatment-block ol:last-child { margin-bottom: 0; }
+.treatment-block a { border-bottom: 1px solid rgba(181, 143, 60, 0.4); }
+.treatment-note {
+    max-width: 900px; margin: 40px auto 0; font-size: 0.95rem; color: var(--text-muted);
+    text-align: center; font-style: italic;
+}
+.treatment-links { text-align: center; margin-top: 90px; }
+.treatment-links .gbt-features { justify-content: center; }
+.treatment-links .gbt-feature-tag { cursor: pointer; }
+.treatment-links .section-cta { margin-top: 40px; }
+.service-card--link { display: block; color: inherit; }
+@media (max-width: 768px) {
+    .treatment-block { flex-direction: column; gap: 14px; padding: 30px 24px; }
+    .treatment-block .pillar-icon { text-align: left; width: auto; }
+    .treatment-block h2 { font-size: 1.6rem; margin-bottom: 14px; }
+    .treatment-links { margin-top: 60px; }
+}
