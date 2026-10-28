@@ -831,6 +831,32 @@ h1.page-title::after {
 }
 .clinic-slider.clinic-slider--preview:hover { animation-play-state: paused; }
 
+/* Arrow-style links for moving between pages */
+.arrow-link { display: inline-block; text-align: left; color: var(--accent-gold); }
+.arrow-link:hover { color: var(--accent-gold-bright); }
+.arrow-link svg {
+    display: block; width: 320px; max-width: 100%; height: auto; overflow: visible;
+    transition: transform var(--transition-speed) var(--transition-curve);
+}
+.arrow-link svg line, .arrow-link svg path {
+    fill: none; stroke: currentColor; stroke-width: 1.2; stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+}
+.arrow-link:hover svg { transform: translateX(10px); }
+.arrow-link__label {
+    display: block; margin-top: 8px; font-family: var(--font-body);
+    font-size: 1.35rem; font-weight: 400; letter-spacing: 0.5px;
+}
+
+/* Invitation block closing the inner pages */
+.invite { text-align: center; max-width: 720px; margin: 60px auto 0; }
+.invite p { font-size: 1.1rem; color: var(--text-light); margin-bottom: 2em; }
+.invite p a { color: var(--accent-gold); }
+.invite p a:hover { color: var(--accent-gold-bright); }
+
+/* Google Reviews pill reused as a page-end link (the nav version hides on small screens) */
+.google-reviews-link.google-reviews-link--cta { display: inline-flex; padding: 14px 30px; }
+
 /* Current page marker */
 .footer-nav a[aria-current="page"] { color: var(--text-bright); }
 .mobile-logo-btn.active { border-color: var(--accent-gold); box-shadow: 0 0 0 2px var(--accent-gold); }
