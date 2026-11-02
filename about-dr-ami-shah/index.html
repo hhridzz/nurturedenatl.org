@@ -111,35 +111,27 @@
                     <div class="about-image" data-aos="fade-right" data-aos-duration="1000">
                         <img src="/assets/dr-ami.jpg" alt="Dr. Ami N Shah, Lead Dentist at Nurture Dental Clinic, Matunga Mumbai" loading="eager" fetchpriority="high">
                     </div>
-                    <div class="about-pillars pillar-fan" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200" role="group" aria-label="Our three pillars of care">
-                        <div class="fan-card" data-pillar="0" data-rank="0" role="button" tabindex="0" aria-pressed="true" aria-label="Bespoke Care">
-                            <div class="fan-head">
-                                <div class="fan-icon"><i class="fas fa-hand-holding-heart"></i></div>
-                                <span class="fan-title">Bespoke Care</span>
-                                <span class="fan-index">01</span>
+                    <div class="about-pillars" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                        <div class="pillar-card">
+                            <div class="pillar-icon"><i class="fas fa-hand-holding-heart"></i></div>
+                            <div>
+                                <h5>Bespoke Care</h5>
+                                <p>A boutique experience ensuring you are heard, understood, and treated as an individual.</p>
                             </div>
-                            <p class="fan-text">A boutique experience ensuring you are heard, understood, and treated as an individual.</p>
                         </div>
-                        <div class="fan-card" data-pillar="1" data-rank="1" role="button" tabindex="0" aria-pressed="false" aria-label="Proven Expertise">
-                            <div class="fan-head">
-                                <div class="fan-icon"><i class="fas fa-award"></i></div>
-                                <span class="fan-title">Proven Expertise</span>
-                                <span class="fan-index">02</span>
+                        <div class="pillar-card">
+                            <div class="pillar-icon"><i class="fas fa-award"></i></div>
+                            <div>
+                                <h5>Proven Expertise</h5>
+                                <p>Over two decades of creating healthy, beautiful smiles with the latest innovations.</p>
                             </div>
-                            <p class="fan-text">Over two decades of creating healthy, beautiful smiles with the latest innovations.</p>
                         </div>
-                        <div class="fan-card" data-pillar="2" data-rank="2" role="button" tabindex="0" aria-pressed="false" aria-label="A Gentle Approach">
-                            <div class="fan-head">
-                                <div class="fan-icon"><i class="fas fa-feather-alt"></i></div>
-                                <span class="fan-title">A Gentle Approach</span>
-                                <span class="fan-index">03</span>
+                        <div class="pillar-card">
+                            <div class="pillar-icon"><i class="fas fa-feather-alt"></i></div>
+                            <div>
+                                <h5>A Gentle Approach</h5>
+                                <p>We've cultivated a sanctuary of trust and comfort, transforming dental care into a positive ritual.</p>
                             </div>
-                            <p class="fan-text">We've cultivated a sanctuary of trust and comfort, transforming dental care into a positive ritual.</p>
-                        </div>
-                        <div class="fan-dots">
-                            <button type="button" class="fan-dot is-active" data-pillar="0" aria-label="Show Bespoke Care"><i class="fan-dot-fill"></i></button>
-                            <button type="button" class="fan-dot" data-pillar="1" aria-label="Show Proven Expertise"><i class="fan-dot-fill"></i></button>
-                            <button type="button" class="fan-dot" data-pillar="2" aria-label="Show A Gentle Approach"><i class="fan-dot-fill"></i></button>
                         </div>
                     </div>
                 </div>
@@ -188,54 +180,5 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="/assets/site.js?v=7cbc5a7f"></script>
-<script>
-(function () {
-    var root = document.querySelector('.pillar-fan');
-    if (!root) return;
-    var cards = Array.prototype.slice.call(root.querySelectorAll('.fan-card'));
-    var dots = Array.prototype.slice.call(root.querySelectorAll('.fan-dot'));
-    var n = cards.length, front = 0;
-
-    function setFront(f) {
-        front = (f + n) % n;
-        cards.forEach(function (c, j) {
-            var rank = (j - front + n) % n;
-            c.setAttribute('data-rank', rank);
-            c.setAttribute('aria-pressed', rank === 0 ? 'true' : 'false');
-        });
-        dots.forEach(function (d, j) { d.classList.toggle('is-active', j === front); });
-    }
-    cards.forEach(function (c, j) {
-        c.addEventListener('click', function () { setFront(j === front ? front + 1 : j); });
-        c.addEventListener('keydown', function (e) {
-            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setFront(j === front ? front + 1 : j); }
-            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); setFront(front + 1); }
-            if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); setFront(front - 1); }
-        });
-        c.addEventListener('pointermove', function (e) {
-            var r = c.getBoundingClientRect();
-            c.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
-            c.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
-        });
-    });
-    dots.forEach(function (d, j) { d.addEventListener('click', function () { setFront(j); }); });
-
-    /* auto shuffle: the active dot's progress animation drives it */
-    dots.forEach(function (d) {
-        d.querySelector('.fan-dot-fill').addEventListener('animationend', function () { setFront(front + 1); });
-    });
-    /* pause while a mouse is over the deck, while keyboard focus is inside, or when off screen */
-    var paused = { hover: false, focus: false, view: false };
-    function sync() { root.classList.toggle('is-paused', paused.hover || paused.focus || paused.view); }
-    root.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') { paused.hover = true; sync(); } });
-    root.addEventListener('pointerleave', function () { paused.hover = false; sync(); });
-    root.addEventListener('focusin', function (e) { paused.focus = !!(e.target.matches && e.target.matches(':focus-visible')); sync(); });
-    root.addEventListener('focusout', function () { paused.focus = false; sync(); });
-    if ('IntersectionObserver' in window) {
-        new IntersectionObserver(function (en) { paused.view = !en[0].isIntersecting; sync(); }, { threshold: 0.35 }).observe(root);
-    }
-    setFront(0);
-})();
-</script>
 </body>
 </html>
