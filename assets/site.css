@@ -877,7 +877,7 @@ h1.page-title::after {
 
         /* Pillar deck (About page): liquid-glass shuffle cards */
         .pillar-fan {
-            --card-h: 11.8em; --peek: 3.3em;
+            --card-h: 25em; --peek: 3.3em;
             position: relative; font-size: 16px; width: 100%; max-width: 34em; margin: 0 auto; isolation: isolate;
             height: calc(var(--card-h) + var(--peek) * 2 + 3.4em); display: block;
         }
@@ -891,10 +891,10 @@ h1.page-title::after {
 
         .fan-card {
             --lift: 0em;
-            position: absolute; left: 0; right: 0; top: calc(var(--peek) * 2); height: var(--card-h);
-            padding: 1.05em 1.5em 1.4em; border-radius: 16px; overflow: hidden; cursor: pointer; outline: none;
+            position: absolute; left: 0; right: 0; margin: 0 auto; width: 17.5em; top: calc(var(--peek) * 2); height: var(--card-h);
+            display: flex; flex-direction: column; padding: 1.05em 1.5em 1.6em; border-radius: 16px; overflow: hidden; cursor: pointer; outline: none;
             transform-origin: 50% 0; will-change: transform;
-            background: linear-gradient(140deg, rgba(255, 255, 255, .78) 0%, rgba(255, 255, 255, .46) 55%, rgba(250, 240, 218, .52) 100%);
+            background: linear-gradient(140deg, rgba(255, 255, 255, .92) 0%, rgba(255, 255, 255, .74) 55%, rgba(250, 240, 218, .8) 100%);
             -webkit-backdrop-filter: blur(22px) saturate(180%); backdrop-filter: blur(22px) saturate(180%);
             border: 1px solid rgba(255, 255, 255, .75);
             box-shadow:
@@ -926,9 +926,15 @@ h1.page-title::after {
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, .8);
         }
         .fan-title { font-family: var(--font-heading); font-size: 1.28em; line-height: 1.2; color: var(--text-bright); }
-        .fan-index { margin-left: auto; font-family: var(--font-body); font-size: .72em; font-weight: 500; letter-spacing: 3px; color: var(--accent-gold); }
+        .fan-num {
+            flex: 1; display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-size: 7.5em; line-height: 1;
+            font-weight: 400; letter-spacing: -.02em; transition: opacity .5s ease;
+            background: linear-gradient(160deg, #e6c777 0%, #b58f3c 55%, #8f6d22 100%); -webkit-background-clip: text; background-clip: text;
+            color: transparent; -webkit-text-fill-color: transparent; filter: drop-shadow(0 .06em .08em rgba(181, 143, 60, .25));
+        }
+        .fan-card:not([data-rank="0"]) .fan-num { opacity: 0; }
         .fan-text {
-            margin: 1.05em 0 0; padding-top: 1.05em; border-top: 1px solid var(--border-color);
+            margin: 0; padding-top: 1.1em; border-top: 1px solid var(--border-color);
             font-size: .98em; line-height: 1.7; color: var(--text-light); transition: opacity .5s ease;
         }
         .fan-card:not([data-rank="0"]) .fan-text { opacity: 0; }
@@ -950,7 +956,7 @@ h1.page-title::after {
             .fan-dot.is-active .fan-dot-fill { animation: none; transform: scaleX(1); }
         }
         @media (max-width: 760px) {
-            .pillar-fan { font-size: 15px; --card-h: 12.8em; max-width: 26em; }
+            .pillar-fan { font-size: 15px; --card-h: 23.5em; max-width: 26em; }
             .pillar-fan::before { left: -1em; width: 12em; height: 12em; animation: none; }
             .pillar-fan::after { right: -1em; width: 11em; height: 11em; animation: none; }
         }
