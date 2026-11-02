@@ -870,3 +870,36 @@ h1.page-title::after {
 /* Current page marker */
 .footer-nav a[aria-current="page"] { color: var(--text-bright); }
 .mobile-logo-btn.active { border-color: var(--accent-gold); box-shadow: 0 0 0 2px var(--accent-gold); }
+
+        /* Pillar rings (About page) */
+        .pillar-orbit { align-items: center; gap: 10px; }
+        .orbit-svg { width: 100%; max-width: 420px; height: auto; margin: 0 auto; display: block; overflow: visible; }
+        .orbit-ring {
+            fill: rgba(181, 143, 60, 0); stroke: var(--accent-gold); stroke-width: 2; cursor: pointer; outline: none;
+            pointer-events: all; transition: fill .45s var(--transition-curve), stroke-width .35s ease, filter .45s ease;
+        }
+        .pillar-orbit[data-active="0"] .orbit-ring[data-pillar="0"],
+        .pillar-orbit[data-active="1"] .orbit-ring[data-pillar="1"],
+        .pillar-orbit[data-active="2"] .orbit-ring[data-pillar="2"] { fill: rgba(181, 143, 60, 0.12); stroke-width: 4; filter: drop-shadow(0 6px 14px rgba(181, 143, 60, 0.35)); }
+        .orbit-ring:hover { stroke-width: 3.5; }
+        .orbit-ring:focus-visible { stroke: var(--accent-gold-bright); stroke-width: 5; }
+        .orbit-label {
+            font-family: var(--font-heading, inherit); font-size: 22px; fill: var(--text-light);
+            pointer-events: none; transition: fill .35s ease, font-weight .35s ease; letter-spacing: .5px;
+        }
+        .orbit-label--core { font-size: 20px; }
+        .orbit-label.is-active { fill: var(--accent-gold); font-weight: 600; }
+        .orbit-detail { position: relative; min-height: 150px; width: 100%; }
+        .orbit-panel {
+            position: absolute; inset: 0; display: flex; gap: 25px; align-items: center;
+            background: var(--bg-surface); border: 1px solid var(--accent-gold); padding: 26px 30px; border-radius: 5px;
+            box-shadow: var(--shadow-soft); opacity: 0; transform: translateY(10px); pointer-events: none;
+            transition: opacity .4s ease, transform .4s var(--transition-curve);
+        }
+        .orbit-panel.is-active { opacity: 1; transform: none; pointer-events: auto; }
+        @media (prefers-reduced-motion: reduce) { .orbit-ring, .orbit-label, .orbit-panel { transition: none; } }
+        @media (max-width: 600px) {
+            .orbit-detail { min-height: 190px; }
+            .orbit-panel { padding: 20px; gap: 16px; }
+            .orbit-label { font-size: 24px; }
+        }
