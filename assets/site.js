@@ -21,10 +21,11 @@ function animateCounter(el) {
 document.addEventListener('DOMContentLoaded', function() {
     if (window.AOS) {
         AOS.init({
-            duration: 800,
-            easing: 'ease-out-cubic',
+            duration: 1000,
+            easing: 'ease-out-quart',
             once: true,
-            offset: 50,
+            offset: 60,
+            disable: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
         });
     }
 
@@ -34,15 +35,28 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.classList.add('touch-device');
     } else {
         document.body.classList.remove('touch-device');
+        // Cursor glides after the pointer (eased follow) instead of snapping to it.
+        let cx = -100, cy = -100, tx = -100, ty = -100, cursorLive = false;
         document.addEventListener('mousemove', function(e) {
-            if (customCursor) {
-                customCursor.style.left = e.clientX + 'px';
-                customCursor.style.top = e.clientY + 'px';
-            }
+            tx = e.clientX; ty = e.clientY;
+            if (!cursorLive) { cx = tx; cy = ty; cursorLive = true; requestAnimationFrame(glide); }
         });
-        document.querySelectorAll('a, button, input, textarea, .review-item-summary, #review-modal-close').forEach(el => {
-            el.addEventListener('mouseenter', () => customCursor.classList.add('pointer'));
-            el.addEventListener('mouseleave', () => customCursor.classList.remove('pointer'));
+        function glide() {
+            cx += (tx - cx) * 0.22;
+            cy += (ty - cy) * 0.22;
+            if (customCursor) {
+                customCursor.style.left = cx.toFixed(1) + 'px';
+                customCursor.style.top = cy.toFixed(1) + 'px';
+            }
+            requestAnimationFrame(glide);
+        }
+        // Delegated, so buttons created later (such as review cards) get the pointer state too.
+        const hoverSel = 'a, button, input, textarea, .review-item-summary, #review-modal-close';
+        document.addEventListener('mouseover', e => {
+            if (customCursor && e.target.closest && e.target.closest(hoverSel)) customCursor.classList.add('pointer');
+        });
+        document.addEventListener('mouseout', e => {
+            if (customCursor && e.target.closest && e.target.closest(hoverSel)) customCursor.classList.remove('pointer');
         });
     }
 
@@ -172,3 +186,123 @@ document.addEventListener('DOMContentLoaded', function() {
         }, { passive: true });
     }
 });
+
+
+/* ==========================================================================
+   LUXURY MOTION LAYER (added 7 Nov 2026). Everything here is additive and
+   switches itself off for visitors who prefer reduced motion.
+   ========================================================================== */
+(function () {
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    function ready(fn) {
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
+        else fn();
+    }
+
+    ready(function () {
+        // 1. Cursor-following glow on cards
+        var glowSel = '.service-card, .tech-item, .pillar-card, .review-item-summary, .t-card, .glance, .contact-card';
+        document.querySelectorAll(glowSel).forEach(function (el) { el.classList.add('fx-glow'); });
+        if (fine && !reduce) {
+            document.addEventListener('pointermove', function (e) {
+                var el = e.target.closest && e.target.closest('.fx-glow');
+                if (!el) return;
+                var r = el.getBoundingClientRect();
+                el.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+                el.style.setProperty('--my', (e.clientY - r.top) + 'px');
+            }, { passive: true });
+
+            // 2. Magnetic buttons
+            document.addEventListener('pointermove', function (e) {
+                var b = e.target.closest && e.target.closest('.btn');
+                if (!b) return;
+                var r = b.getBoundingClientRect();
+                var dx = (e.clientX - (r.left + r.width / 2)) / r.width;
+                var dy = (e.clientY - (r.top + r.height / 2)) / r.height;
+                b.style.transform = 'translate(' + (dx * 10).toFixed(1) + 'px,' + (dy * 8).toFixed(1) + 'px)';
+            }, { passive: true });
+            document.addEventListener('pointerout', function (e) {
+                var b = e.target.closest && e.target.closest('.btn');
+                if (b && !b.contains(e.relatedTarget)) b.style.transform = '';
+            });
+
+            // 3. Gentle 3D tilt on illustrations
+            document.querySelectorAll('[data-tilt]').forEach(function (wrap) {
+                var fig = wrap.querySelector('figure');
+                if (!fig) return;
+                wrap.addEventListener('pointermove', function (e) {
+                    var r = wrap.getBoundingClientRect();
+                    var x = (e.clientX - r.left) / r.width - 0.5;
+                    var y = (e.clientY - r.top) / r.height - 0.5;
+                    fig.style.transform = 'rotateY(' + (x * 7).toFixed(2) + 'deg) rotateX(' + (-y * 7).toFixed(2) + 'deg)';
+                });
+                wrap.addEventListener('pointerleave', function () { fig.style.transform = ''; });
+            });
+        }
+
+        // 4. Word-by-word headline reveal
+        function splitWords(node, counter) {
+            Array.prototype.slice.call(node.childNodes).forEach(function (child) {
+                if (child.nodeType === 3) {
+                    var frag = document.createDocumentFragment();
+                    child.textContent.split(/(\s+)/).forEach(function (part) {
+                        if (!part) return;
+                        if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
+                        var w = document.createElement('span'); w.className = 'w'; w.setAttribute('aria-hidden', 'true');
+                        var wi = document.createElement('span'); wi.className = 'wi';
+                        wi.style.setProperty('--i', counter.n++); wi.textContent = part;
+                        w.appendChild(wi); frag.appendChild(w);
+                    });
+                    node.replaceChild(frag, child);
+                } else if (child.nodeType === 1) {
+                    splitWords(child, counter);
+                }
+            });
+        }
+        var splits = document.querySelectorAll('.split-reveal');
+        splits.forEach(function (el) {
+            el.setAttribute('aria-label', el.textContent.trim());
+            splitWords(el, { n: 0 });
+        });
+
+        // 5. Reveal triggers (headline words, illustration curtains, journey progress)
+        var revealTargets = document.querySelectorAll('.split-reveal, .reveal-curtain');
+        if ('IntersectionObserver' in window && !reduce) {
+            var io = new IntersectionObserver(function (entries) {
+                entries.forEach(function (en) {
+                    if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+                });
+            }, { threshold: 0.2, rootMargin: '0px 0px -8% 0px' });
+            revealTargets.forEach(function (el) { io.observe(el); });
+        } else {
+            revealTargets.forEach(function (el) { el.classList.add('in'); });
+        }
+
+        // 6. Journey: the gold line draws as you scroll and each step lights when reached
+        var journeys = document.querySelectorAll('.journey');
+        if (journeys.length) {
+            var steps = [];
+            journeys.forEach(function (j) { j.querySelectorAll('.journey-step').forEach(function (s) { steps.push(s); }); });
+            var ticking = false;
+            function updateJourneys() {
+                ticking = false;
+                var vh = window.innerHeight;
+                journeys.forEach(function (j) {
+                    var r = j.getBoundingClientRect();
+                    var p = (vh * 0.62 - r.top) / r.height;
+                    j.style.setProperty('--p', Math.max(0, Math.min(1, p)).toFixed(3));
+                    j.querySelectorAll('.journey-step').forEach(function (s) {
+                        var sr = s.getBoundingClientRect();
+                        s.classList.toggle('lit', reduce || sr.top < vh * 0.68);
+                    });
+                });
+            }
+            function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(updateJourneys); } }
+            window.addEventListener('scroll', onScroll, { passive: true });
+            window.addEventListener('resize', onScroll);
+            updateJourneys();
+        }
+    });
+})();
